@@ -86,12 +86,34 @@ class Decrypt
 	end
 end
 
-puts "Welcome to Scytale, a transposition cipher."
+class Display
+	def initialize (message, cipher, outcome)
+		@message = message
+		@cipher = cipher
+		@outcome = outcome
+	end
 
+	def show
+		puts "--------------------------------------------------------------\nMessage: #{@message}\nCipher: #{@cipher}\n\n#{@outcome}\n\n--------------------------------------------------------------"
+	end
+end
+
+class Warning
+	def show
+		puts "WARNING: The cipher is greater than or equal the size of the message. The message will not encrypt. Do you want to continue?\n(y) - Yes\n(n or other) - No"
+	end
+end
+
+puts "Welcome to Scytale, a transposition cipher.\n\n"
+message = ""
 loop do
+	puts "Current Message: #{message}\n"
 	puts "What do you want to do?"
-	puts "(1) - Encrypt a message"
-	puts "(2) - Decrypt a message"
+	puts "(1) - Encrypt new message"
+	puts "(2) - Decrypt new message"
+	puts "(3) - Encrypt current message"
+	puts "(4) - Decrypt current message"
+	puts "(5) - Clear current message"
 	puts "(Other) - Exit"
 	choice = gets.chomp.to_i
 
@@ -101,76 +123,104 @@ loop do
 		print "Enter your cipher: "
 		cipher = gets.chomp.to_i
 
-		#run the message and cipher through the encryption class
+		#Run the message and cipher through the encryption class
 		outcome = Encrypt.new(message, cipher)
 
+		#If the cipher is bigger than the message then the message cannot be encrypted. This sequence gives users a warning if their cipher is too big and then the option to cancel their request
 		if cipher >= message.length
-			puts "WARNING: The cipher is greater than or equal the size of the message. The message will not encrypt. Do you want to continue?"
-			puts "(y) - Yes"
-			puts "(n or other) - No"
+			puts Warning.new.show
 			responseToWarning = gets.chomp.to_s.downcase
 
 			if responseToWarning[0] == "y"
 				#Display outcome
-				puts "--------------------------------------------------------------"
-				puts "Message: #{message}"
-				puts "Cipher: #{cipher}"
-				puts "\n"
-				puts outcome.makeNewMessage
-				puts "\n"
-				puts "--------------------------------------------------------------"
+				puts Display.new(message, cipher, outcome.makeNewMessage).show
 			else
 				next
 			end
 		else
-			#Display
-			puts "--------------------------------------------------------------"
-			puts "Message: #{message}"
-			puts "Cipher: #{cipher}"
-			puts "\n"
-			puts outcome.makeNewMessage
-			puts "\n"
-			puts "--------------------------------------------------------------"
+			#Display outcome
+			puts Display.new(message, cipher, outcome.makeNewMessage).show
 		end
+
+		message = outcome.makeNewMessage
 	elsif choice == 2
 		print "Enter your message: "
 		message = gets.chomp.to_s
 		print "Enter your cipher: "
 		cipher = gets.chomp.to_i
 
-		#run the message and cipher through the decryption class and display
+		#Run the message and cipher through the decryption class and display
 		outcome = Decrypt.new(message, cipher)
 
+		#If the cipher is bigger than the message then the message cannot be decrypted. This sequence gives users a warning if their cipher is too big and then the option to cancel their request
 		if cipher >= message.length
-			puts "WARNING: The cipher is greater than or equal the size of the message. The message will not encrypt. Do you want to continue?"
-			puts "(y) - Yes"
-			puts "(n or other) - No"
+			puts Warning.new.show
 			responseToWarning = gets.chomp.to_s.downcase
 
 			if responseToWarning[0] == "y"
 				#Display outcome
-				puts "--------------------------------------------------------------"
-				puts "Message: #{message}"
-				puts "Cipher: #{cipher}"
-				puts "\n"
-				puts outcome.makeNewMessage
-				puts "\n"
-				puts "--------------------------------------------------------------"
+				puts Display.new(message, cipher, outcome.makeNewMessage).show
 			else
 				next
 			end
 		else
 			#Display outcome
-			puts "--------------------------------------------------------------"
-			puts "Message: #{message}"
-			puts "Cipher: #{cipher}"
-			puts "\n"
-			puts outcome.makeNewMessage
-			puts "\n"
-			puts "--------------------------------------------------------------"
+			puts Display.new(message, cipher, outcome.makeNewMessage).show
 		end
+
+		message = outcome.makeNewMessage
+	elsif choice == 3
+		print "Enter your cipher: "
+		cipher = gets.chomp.to_i
+		
+		#Run the message and cipher through the encryption class
+		outcome = Encrypt.new(message, cipher)
+
+		#If the cipher is bigger than the message then the message cannot be encrypted. This sequence gives users a warning if their cipher is too big and then the option to cancel their request
+		if cipher >= message.length
+			puts Warning.new.show
+			responseToWarning = gets.chomp.to_s.downcase
+
+			if responseToWarning[0] == "y"
+				#Display outcome
+				puts Display.new(message, cipher, outcome.makeNewMessage).show
+			else
+				next
+			end
+		else
+			#Display outcome
+			puts Display.new(message, cipher, outcome.makeNewMessage).show
+		end
+
+		message = outcome.makeNewMessage
+	elsif choice == 4
+		print "Enter your cipher: "
+		cipher = gets.chomp.to_i
+
+		#Run the message and cipher through the decryption class and display
+		outcome = Decrypt.new(message, cipher)
+
+		#If the cipher is bigger than the message then the message cannot be decrypted. This sequence gives users a warning if their cipher is too big and then the option to cancel their request
+		if cipher >= message.length
+			puts Warning.new.show
+			responseToWarning = gets.chomp.to_s.downcase
+
+			if responseToWarning[0] == "y"
+				#Display outcome
+				puts Display.new(message, cipher, outcome.makeNewMessage).show
+			else
+				next
+			end
+		else
+			#Display outcome
+			puts Display.new(message, cipher, outcome.makeNewMessage).show
+		end
+
+		message = outcome.makeNewMessage
+	elsif choice == 5
+		message = ""
 	else
 		puts "Goodbye"
-        break
+		break
 	end
 end
