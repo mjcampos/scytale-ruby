@@ -21,7 +21,7 @@ loop do
 	if choice == 1
 		print "Enter your message: "
 		message = gets.chomp.to_s
-		print "Enter your cipher: "
+		print "Enter your cipher (Make sure it is an integer): "
 		cipher = gets.chomp.to_i
 
 		#Run the message and cipher through the encryption class
@@ -47,7 +47,7 @@ loop do
 	elsif choice == 2
 		print "Enter your message: "
 		message = gets.chomp.to_s
-		print "Enter your cipher: "
+		print "Enter your cipher (Make sure it is an integer): "
 		cipher = gets.chomp.to_i
 
 		#Run the message and cipher through the decryption class and display
@@ -71,7 +71,7 @@ loop do
 
 		message = outcome.makeNewMessage
 	elsif choice == 3
-		print "Enter your cipher: "
+		print "Enter your cipher (Make sure it is an integer): "
 		cipher = gets.chomp.to_i
 		
 		#Run the message and cipher through the encryption class
@@ -95,7 +95,7 @@ loop do
 
 		message = outcome.makeNewMessage
 	elsif choice == 4
-		print "Enter your cipher: "
+		print "Enter your cipher (Make sure it is an integer): "
 		cipher = gets.chomp.to_i
 
 		#Run the message and cipher through the decryption class and display
